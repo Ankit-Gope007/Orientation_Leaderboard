@@ -41,12 +41,12 @@ export default function Leaderboard() {
   }, []);
 
   // Simple Caesar cipher for demo (shift by 3)
-  function encryptText(text: string) {
-    return text.replace(/[a-zA-Z]/g, (c) => {
-      const base = c <= 'Z' ? 65 : 97;
-      return String.fromCharCode(((c.charCodeAt(0) - base + 3) % 26) + base);
-    });
-  }
+  // function encryptText(text: string) {
+  //   return text.replace(/[a-zA-Z]/g, (c) => {
+  //     const base = c <= 'Z' ? 65 : 97;
+  //     return String.fromCharCode(((c.charCodeAt(0) - base + 3) % 26) + base);
+  //   });
+  // }
 
   // Decrypt animation for all names
   return (
