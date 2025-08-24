@@ -20,15 +20,17 @@ export async function POST(req: NextRequest) {
           const result = await model.generateContent(prompt);
           const response = result.response.text();
           return { name, meaning: response };
-        } catch (err: any) {
-          return { name, error: err.message || "Failed to fetch meaning" };
+        } catch (err: unknown) {
+          const errorMessage = err instanceof Error ? err.message : "Failed to fetch meaning";
+          return { name, error: errorMessage };
         }
       })
     );
-
     return NextResponse.json(results);
-  } catch (err: any) {
+
+  } catch (err: unknown) {
     console.error("Gemini Error:", err);
-    return NextResponse.json({ error: err.message || "Something went wrong" }, { status: 500 });
+    const errorMessage = err instanceof Error ? err.message : "Something went wrong";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

@@ -15,6 +15,7 @@ export default function Leaderboard() {
   const [loading, setLoading] = useState(true);
   const [meanings, setMeanings] = useState<Record<string, string>>({});
   const [loadingMeanings, setLoadingMeanings] = useState(false);
+  const [showParagraphs, setShowParagraphs] = useState(false);
 
   useEffect(() => {
     axios.get("/api/user/leaderboard")
@@ -66,23 +67,32 @@ export default function Leaderboard() {
                   <span className="text-lg text-white font-semibold">{idx + 1}. {user.name}</span>
                   <span className="text-base text-blue-300 font-medium bg-blue-950/60 px-2 py-0.5 rounded-full">{user.branch}</span>
                 </div>
-                <div
-                  id={`para-${user.id}`}
-                  className="mt-3 text-gray-300 text-sm bg-gray-800 rounded p-3 animate-fade-in"
-                >
-                  {loadingMeanings ? (
-                    <span className="loader"></span>
-                  ) : meanings[user.name] ? (
-                    meanings[user.name]
-                  ) : (
-                    `No meaning found for ${user.name}.`
-                  )}
-                </div>
+                {showParagraphs && (
+                  <div
+                    id={`para-${user.id}`}
+                    className="mt-3 text-gray-300 text-sm bg-gray-800 rounded p-3 animate-fade-in"
+                  >
+                    {loadingMeanings ? (
+                      <span className="loader"></span>
+                    ) : meanings[user.name] ? (
+                      meanings[user.name]
+                    ) : (
+                      `No meaning found for ${user.name}.`
+                    )}
+                  </div>
+                )}
               </li>
             ))}
           </ol>
         )}
       </div>
+      <button
+        className="mt-8 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded shadow-lg transition"
+        onClick={() => setShowParagraphs(true)}
+        disabled={showParagraphs}
+      >
+        Decrypt
+      </button>
       <style jsx>{`
         .animate-fade-in {
           animation: fadeIn 0.8s cubic-bezier(0.4,0,0.2,1);
