@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
     // Limit number of names and length of each name
     const safeNames = names.slice(0, 10).map((n: string) => n.slice(0, 30));
 
-    const prompt = `For each of these names, give a FOSS-related meaning in 20-25 words. Return each meaning on a new line in the same order as the names:\n${safeNames.join(", ")}`;
+    const prompt = `For each of these names, how is the word related to open source, tell in a fun and unique way  in 20-25 words. Return each meaning on a new line in the same order as the names:\n${safeNames.join(", ")}`;
 
     const result = await model.generateContent(prompt);
     const response = result.response.text();
